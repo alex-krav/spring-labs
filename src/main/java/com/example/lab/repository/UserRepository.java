@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface UserRepository {
     Collection<User> findAll();
-    Collection<User> findByLastName(String lastName);
+    Collection<User> findByName(String name);
     User findById(int id);
     void save(User user);
 }

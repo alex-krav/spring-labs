@@ -16,9 +16,9 @@ public class UserRepositoryImpl implements UserRepository {
     private List<User> users = new ArrayList<>();
 
     public UserRepositoryImpl() {
-        users.add(new User("Alex","Kravchuk"));
-        users.add(new User("John","Doe"));
-        users.add(new User("Elon","Musk"));
+        users.add(new User("Alex Kravchuk","alex@example.com", "password"));
+        users.add(new User("John Doe","john@example.com", "password"));
+        users.add(new User("Elon Musk","elon@tesla.com", "password"));
     }
 
     @Override
@@ -27,10 +27,10 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Collection<User> findByLastName(String lastName) {
+    public Collection<User> findByName(String name) {
         return users
                 .stream()
-                .filter(u -> u.getLastName().equals(lastName))
+                .filter(u -> u.getName().equals(name))
                 .collect(Collectors.toList());
     }
 
