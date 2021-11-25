@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Search</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="styles/style.css">
+    </head>
+    <body>
+        <h1>Search</h1>
+        <p>Currently supports up to 3 search characters.</p>
+        <form action="/search" method="get">
+            <p>Name: <input type="text" name="name" /></p>
+            <p>Author: <input type="text" name="author" /></p>
+            <p>Keyword: <input type="text" name="keyword" /></p>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+        <table>
+            <tr th:if="${books.empty && !query.empty}">
+                <td colspan="3"> No results by your query: <span th:text="${query}" /></td>
+            </tr>
+            <tr th:if="${!books.empty}">
+                <td colspan="3"> Results by your query: <span th:text="${query}" /></td>
+            </tr>
+            <tr th:each="book: ${books}">
+                <td th:text="${book.name}" />
+                <td th:text="${#strings.listJoin(book.authors, ', ')}" />
+                <td th:text="${#strings.listJoin(book.keywords, ', ')}" />
+            </tr>
+        </table>
+    </body>
+</html>
