@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -32,5 +32,5 @@ public class User extends BaseEntity {
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns =
     @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<Role> roles;
+    private List<Role> roles;
 }

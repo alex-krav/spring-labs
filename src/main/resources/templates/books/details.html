@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Book details</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="styles/style.css">
+    </head>
+    <body>
+        <h1>Book</h1>
+        <table>
+            <tr><td th:text="${book.name}" /></tr>
+            <tr><td th:text="${#strings.listJoin(book.authors, ', ')}" /></tr>
+            <tr><td th:text="${#strings.listJoin(book.keywords, ', ')}" /></tr>
+        </table>
+    </body>
+</html>

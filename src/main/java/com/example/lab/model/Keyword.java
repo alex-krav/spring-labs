@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "keyword")
@@ -22,5 +22,10 @@ public class Keyword extends BaseEntity {
     @ManyToMany
     @JoinTable(name = "book_keywords", joinColumns =
     @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "keyword_id"))
-    private Set<Book> books;
+    private List<Book> books;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

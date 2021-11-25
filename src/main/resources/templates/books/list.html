@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Books list</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="styles/style.css">
+    </head>
+    <body>
+        <h1>Books</h1>
+        <table>
+            <tr th:if="${books.empty}">
+                <td colspan="3"> No Books Available </td>
+            </tr>
+            <tr th:each="book: ${books}">
+                <td th:text="${book.name}" />
+                <td th:text="${#strings.listJoin(book.authors, ', ')}" />
+                <td th:text="${#strings.listJoin(book.keywords, ', ')}" />
+            </tr>
+        </table>
+    </body>
+</html>
