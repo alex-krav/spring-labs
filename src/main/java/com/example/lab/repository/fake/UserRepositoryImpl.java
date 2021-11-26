@@ -15,12 +15,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     private List<User> users = new ArrayList<>();
 
-    public UserRepositoryImpl() {
-        users.add(new User("Alex Kravchuk","alex@example.com", "password"));
-        users.add(new User("John Doe","john@example.com", "password"));
-        users.add(new User("Elon Musk","elon@tesla.com", "password"));
-    }
-
     @Override
     public Collection<User> findAll() {
         return Collections.unmodifiableList(users);

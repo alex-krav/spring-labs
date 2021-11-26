@@ -4,7 +4,9 @@ import com.example.lab.model.Author;
 import com.example.lab.model.BaseEntity;
 import com.example.lab.model.Book;
 import com.example.lab.model.Keyword;
+import com.example.lab.repository.AuthorRepository;
 import com.example.lab.repository.BookRepository;
+import com.example.lab.repository.KeywordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -20,6 +22,11 @@ import java.util.stream.Collectors;
 
 @Repository
 public class JdbcBookRepositoryImpl implements BookRepository {
+
+    @Autowired
+    private AuthorRepository authorRepository;
+    @Autowired
+    private KeywordRepository keywordRepository;
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -69,6 +76,7 @@ public class JdbcBookRepositoryImpl implements BookRepository {
                 Map.of("name", "%" + name + "%"),
                 BeanPropertyRowMapper.newInstance(Book.class)
         );
+        books = books.stream().filter(b -> b != null && b.getId() != null).collect(Collectors.toList());
         loadBookAuthorsAndKeywords(books);
         return books;
     }
@@ -81,6 +89,7 @@ public class JdbcBookRepositoryImpl implements BookRepository {
                 Map.of("fullname", "%" + name + "%"),
                 BeanPropertyRowMapper.newInstance(Book.class)
         );
+        books = books.stream().filter(b -> b != null && b.getId() != null).collect(Collectors.toList());
         loadBookAuthorsAndKeywords(books);
         return books;
     }
@@ -93,6 +102,7 @@ public class JdbcBookRepositoryImpl implements BookRepository {
                 Map.of("name", "%" + name + "%"),
                 BeanPropertyRowMapper.newInstance(Book.class)
         );
+        books = books.stream().filter(b -> b != null && b.getId() != null).collect(Collectors.toList());
         loadBookAuthorsAndKeywords(books);
         return books;
     }
@@ -120,7 +130,7 @@ public class JdbcBookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public void save(Book book) {
+    public Book save(Book book) {
 
         BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(book);
         if (book.isNew()) {
@@ -135,6 +145,8 @@ public class JdbcBookRepositoryImpl implements BookRepository {
             saveAuthors(book);
             saveKeywords(book);
         }
+
+        return book;
     }
 
     @Override
@@ -198,41 +210,53 @@ public class JdbcBookRepositoryImpl implements BookRepository {
     }
 
     private void saveAuthors(final Book book) {
-        List<Map<String, Object>> params = new ArrayList<>();
+        authorRepository.deleteForBook(book);
 
+        List<Map<String, Object>> params = new ArrayList<>();
         for (Author author : book.getAuthors()) {
+            if (author.isNew()) {
+                Author existingAuthor = authorRepository.findByName(author.getFullname());
+                if (existingAuthor != null) {
+                    author.setId(existingAuthor.getId());
+                }
+            }
+
             BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(author);
             if (author.isNew()) {
                 Number newKey = this.insertAuthor.executeAndReturnKey(parameterSource);
                 author.setId(newKey.intValue());
-                params.add(Map.of("book_id", book.getId(), "author_id", author.getId()));
-            } else {
-                this.namedParameterJdbcTemplate.update(
-                        "UPDATE author SET fullname=:fullname WHERE id=:id",
-                        parameterSource);
             }
+            params.add(Map.of("book_id", book.getId(), "author_id", author.getId()));
         }
 
-        this.insertAuthorBooks.executeBatch(params.toArray(Map[]::new));
+        if (!params.isEmpty()) {
+            this.insertAuthorBooks.executeBatch(params.toArray(Map[]::new));
+        }
     }
 
     private void saveKeywords(final Book book) {
-        List<Map<String, Object>> params = new ArrayList<>();
+        keywordRepository.deleteForBook(book);
 
+        List<Map<String, Object>> params = new ArrayList<>();
         for (Keyword keyword : book.getKeywords()) {
+            if (keyword.isNew()) {
+                Keyword existingKeyword = keywordRepository.findByName(keyword.getName());
+                if (existingKeyword != null) {
+                    keyword.setId(existingKeyword.getId());
+                }
+            }
+
             BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(keyword);
             if (keyword.isNew()) {
                 Number newKey = this.insertKeyword.executeAndReturnKey(parameterSource);
                 keyword.setId(newKey.intValue());
-                params.add(Map.of("book_id", book.getId(), "keyword_id", keyword.getId()));
-            } else {
-                this.namedParameterJdbcTemplate.update(
-                        "UPDATE keyword SET name=:name WHERE id=:id",
-                        parameterSource);
             }
+            params.add(Map.of("book_id", book.getId(), "keyword_id", keyword.getId()));
         }
 
-        this.insertBookKeywords.executeBatch(params.toArray(Map[]::new));
+        if (!params.isEmpty()) {
+            this.insertBookKeywords.executeBatch(params.toArray(Map[]::new));
+        }
     }
 
     private void loadAuthors(final Book book) {

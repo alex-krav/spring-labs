@@ -10,6 +10,6 @@ public interface BookRepository {
     Collection<Book> findByAuthor(String author);
     Collection<Book> findByKeyword(String keyword);
     Book findById(int id);
-    void save(Book book);
+    Book save(Book book);
     void delete(Book book);
 }

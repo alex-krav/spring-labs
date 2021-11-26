@@ -2,7 +2,7 @@
 
 ## MariaDB database
 
-- open installation directory, e.g. C:\Program Files\MariaDB 10.6\bin
+- open installation directory, e.g. "C:\Program Files\MariaDB 10.6\bin"
 - populate database with initial data
 ```
 mysql -u root -proot --default-character-set=utf8 < "PROJECT_DIRECTORY\database\mariadb\schema.sql
@@ -29,5 +29,5 @@ mvn clean install
 
 ### Run 
 ```
-mvn spring-boot:run -Dspring-boot.run.profiles=mariadb
+mvn spring-boot:run
 ```

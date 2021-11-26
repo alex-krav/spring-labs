@@ -10,12 +10,9 @@ import java.util.List;
 @Table(name = "book")
 @Setter
 @Getter
-@RequiredArgsConstructor
-@NoArgsConstructor
 public class Book extends BaseEntity {
 
     @Column(name = "name")
-    @NonNull
     @Size(max = 255)
     private String name;
 

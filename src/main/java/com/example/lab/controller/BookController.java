@@ -1,14 +1,14 @@
 package com.example.lab.controller;
 
 import com.example.lab.model.Book;
+import com.example.lab.model.Form;
 import com.example.lab.service.BookService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -58,5 +58,32 @@ public class BookController {
         mav.addObject("books", books);
         mav.addObject("query", query);
         return mav;
+    }
+
+    @GetMapping("/books/add")
+    public ModelAndView initCreationForm() {
+        ModelAndView mav = new ModelAndView("books/addForm.html");
+        mav.addObject("form", new Form());
+        return mav;
+    }
+
+    @PostMapping("/books/add")
+    public RedirectView processCreationForm(@ModelAttribute Form form) {
+        Book book = bookService.save(form);
+        return new RedirectView("/books/" + book.getId());
+    }
+
+    @GetMapping(value = "/books/{bookId}/edit")
+    public ModelAndView initUpdateForm(@PathVariable("bookId") int bookId) {
+        ModelAndView mav = new ModelAndView("books/editForm.html");
+        mav.addObject("book", bookService.findBookById(bookId));
+        mav.addObject("actionPath", String.format("/books/%d/edit", bookId));
+        return mav;
+    }
+
+    @PostMapping(value = "/books/{bookId}/edit")
+    public RedirectView processEditForm(@PathVariable("bookId") int bookId, Book book) {
+        bookService.save(book);
+        return new RedirectView("/books/" + book.getId());
     }
 }
