@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    #    url: jdbc:h2:file:./database/libcat
+    url: jdbc:h2:file:./database/libcat;INIT=RUNSCRIPT FROM './database/schema.sql'\;RUNSCRIPT FROM './database/data.sql'
+    username: admin
+    password: admin
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false

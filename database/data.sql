@@ -1,3 +1,5 @@
+USE libcat;
+
 INSERT INTO author VALUES (1, 'Джордж Оруэлл');
 INSERT INTO author VALUES (2, 'Людмила Сарычева');
 INSERT INTO author VALUES (3, 'Максим Ильяхов');

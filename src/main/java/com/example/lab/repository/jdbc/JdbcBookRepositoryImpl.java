@@ -65,7 +65,7 @@ public class JdbcBookRepositoryImpl implements BookRepository {
     @Override
     public Collection<Book> findByName(String name) {
         List<Book> books = this.namedParameterJdbcTemplate.query(
-                "SELECT id, name FROM book WHERE name LIKE :name order by name",
+                "SELECT distinct(id), name FROM book WHERE UPPER(name) LIKE UPPER(:name) order by name",
                 Map.of("name", "%" + name + "%"),
                 BeanPropertyRowMapper.newInstance(Book.class)
         );
@@ -76,7 +76,7 @@ public class JdbcBookRepositoryImpl implements BookRepository {
     @Override
     public Collection<Book> findByAuthor(String name) {
         List<Book> books = this.namedParameterJdbcTemplate.query(
-                "SELECT b.id, b.name FROM author a LEFT JOIN author_books ab ON a.id = ab.author_id " +
+                "SELECT distinct(b.id), b.name FROM author a LEFT JOIN author_books ab ON a.id = ab.author_id " +
                         "LEFT JOIN book b ON b.id = ab.book_id WHERE UPPER(a.fullname) LIKE UPPER(:fullname) order by b.name",
                 Map.of("fullname", "%" + name + "%"),
                 BeanPropertyRowMapper.newInstance(Book.class)
@@ -88,7 +88,7 @@ public class JdbcBookRepositoryImpl implements BookRepository {
     @Override
     public Collection<Book> findByKeyword(String name) {
         List<Book> books = this.namedParameterJdbcTemplate.query(
-                "SELECT b.id, b.name FROM keyword k LEFT JOIN book_keywords bk ON k.id = bk.keyword_id " +
+                "SELECT distinct(b.id), b.name FROM keyword k LEFT JOIN book_keywords bk ON k.id = bk.keyword_id " +
                         "LEFT JOIN book b ON b.id = bk.book_id WHERE UPPER(k.name) LIKE UPPER(:name) order by b.name",
                 Map.of("name", "%" + name + "%"),
                 BeanPropertyRowMapper.newInstance(Book.class)
