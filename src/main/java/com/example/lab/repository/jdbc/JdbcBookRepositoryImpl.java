@@ -150,17 +150,22 @@ public class JdbcBookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public void delete(Book book) {
-        BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(book);
-        this.namedParameterJdbcTemplate.update(
-                "DELETE from book WHERE id=:id",
-                parameterSource);
+    public void delete(int id) {
+        Book book = findById(id);
+        if (book == null) {
+            return;
+        }
+
+        Map<String,Object> params = Map.of("id", id);
         this.namedParameterJdbcTemplate.update(
                 "DELETE from author_books WHERE book_id = :id",
-                Map.of("id", book.getId()));
+                params);
         this.namedParameterJdbcTemplate.update(
                 "DELETE from book_keywords WHERE book_id = :id",
-                Map.of("id", book.getId()));
+                params);
+        this.namedParameterJdbcTemplate.update(
+                "DELETE from book WHERE id=:id",
+                params);
 
         deleteAuthorsWithoutBooks(book);
         deleteKeywordsWithoutBooks(book);
@@ -168,30 +173,40 @@ public class JdbcBookRepositoryImpl implements BookRepository {
 
     private void deleteAuthorsWithoutBooks(Book book) {
         for (Author author : book.getAuthors()) {
+            Map<String,Object> params = Map.of("id", author.getId());
             List<Book> authorBooks = namedParameterJdbcTemplate.query(
                     "SELECT b.id, b.name from author a LEFT JOIN author_books ab on a.id = ab.author_id " +
                             "LEFT JOIN book b on b.id = ab.book_id WHERE a.id = :id",
-                    Map.of("id", author.getId()),
+                    params,
                     BeanPropertyRowMapper.newInstance(Book.class));
+            authorBooks = authorBooks.stream().filter(b -> b != null && b.getId() != null).collect(Collectors.toList());
             if (authorBooks.isEmpty()) {
                 this.namedParameterJdbcTemplate.update(
+                        "DELETE from author_books WHERE author_id = :id",
+                        params);
+                this.namedParameterJdbcTemplate.update(
                         "DELETE from author WHERE id=:id",
-                        Map.of("id", author.getId()));
+                        params);
             }
         }
     }
 
     private void deleteKeywordsWithoutBooks(Book book) {
         for (Keyword keyword : book.getKeywords()) {
+            Map<String,Object> params = Map.of("id", keyword.getId());
             List<Book> keywordBooks = namedParameterJdbcTemplate.query(
                     "SELECT b.id, b.name from keyword k LEFT JOIN book_keywords bk on k.id = bk.keyword_id " +
                             "LEFT JOIN book b on b.id = bk.book_id WHERE k.id = :id",
-                    Map.of("id", keyword.getId()),
+                            params,
                     BeanPropertyRowMapper.newInstance(Book.class));
+            keywordBooks = keywordBooks.stream().filter(b -> b != null && b.getId() != null).collect(Collectors.toList());
             if (keywordBooks.isEmpty()) {
                 this.namedParameterJdbcTemplate.update(
+                        "DELETE from book_keywords WHERE keyword_id = :id",
+                        params);
+                this.namedParameterJdbcTemplate.update(
                         "DELETE from keyword WHERE id=:id",
-                        Map.of("id", keyword.getId()));
+                        params);
             }
         }
     }
@@ -260,22 +275,24 @@ public class JdbcBookRepositoryImpl implements BookRepository {
     }
 
     private void loadAuthors(final Book book) {
-        final List<Author> authors = this.namedParameterJdbcTemplate.query(
+        List<Author> authors = this.namedParameterJdbcTemplate.query(
                 "SELECT a.id, a.fullname FROM author_books ab " +
                         "left join author a on ab.author_id = a.id where ab.book_id = :id order by a.fullname",
                 Map.of("id", book.getId()),
                 BeanPropertyRowMapper.newInstance(Author.class)
         );
+        authors = authors.stream().filter(b -> b != null && b.getId() != null).collect(Collectors.toList());
         book.setAuthors(authors);
     }
 
     private void loadKeywords(final Book book) {
-        final List<Keyword> keywords = this.namedParameterJdbcTemplate.query(
+        List<Keyword> keywords = this.namedParameterJdbcTemplate.query(
                 "SELECT k.id, k.name FROM book_keywords bk " +
                         "left join keyword k on bk.keyword_id = k.id where bk.book_id = :id order by k.name",
                 Map.of("id", book.getId()),
                 BeanPropertyRowMapper.newInstance(Keyword.class)
         );
+        keywords = keywords.stream().filter(b -> b != null && b.getId() != null).collect(Collectors.toList());
         book.setKeywords(keywords);
     }
 

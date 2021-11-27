@@ -86,4 +86,10 @@ public class BookController {
         bookService.save(book);
         return new RedirectView("/books/" + book.getId());
     }
+
+    @PostMapping("/books/{bookId}/delete")
+    public RedirectView deleteBook(@PathVariable("bookId") int bookId) {
+        bookService.delete(bookId);
+        return new RedirectView("/books");
+    }
 }

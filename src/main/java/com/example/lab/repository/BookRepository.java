@@ -11,5 +11,5 @@ public interface BookRepository {
     Collection<Book> findByKeyword(String keyword);
     Book findById(int id);
     Book save(Book book);
-    void delete(Book book);
+    void delete(int id);
 }

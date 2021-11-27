@@ -13,5 +13,5 @@ public interface BookService {
     Book findBookById(int id);
     void save(Book book);
     Book save(Form form);
-    void delete(Book book);
+    void delete(int id);
 }
