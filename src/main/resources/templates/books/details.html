@@ -6,11 +6,16 @@
         <link rel="stylesheet" href="/styles/style.css">
     </head>
     <body>
+        <menu th:insert="/fragments/menu.html :: menu"> </menu>
         <h1>Book</h1>
+        <a th:href="'/books/' + ${book.id} + '/edit'">Edit</a>
         <table>
             <tr><td th:text="${book.name}" /></tr>
             <tr><td th:text="${#strings.listJoin(book.authors, ', ')}" /></tr>
             <tr><td th:text="${#strings.listJoin(book.keywords, ', ')}" /></tr>
         </table>
+        <form method="post" th:action="'/books/' + ${book.id} + '/delete'">
+            <input type="submit" value="Delete" />
+        </form>
     </body>
 </html>

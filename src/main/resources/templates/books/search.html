@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="/styles/style.css">
     </head>
     <body>
+        <menu th:insert="/fragments/menu.html :: menu"> </menu>
         <h1>Search</h1>
         <form action="/search" method="get">
             <p>Name: <input type="text" name="name" /></p>

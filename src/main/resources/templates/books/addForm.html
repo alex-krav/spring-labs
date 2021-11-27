@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="/styles/style.css">
     </head>
     <body>
+        <menu th:insert="/fragments/menu.html :: menu"> </menu>
         <h1>New book</h1>
         <form action="#" th:action="@{/books/add}" th:object="${form}" method="post">
             <p>Name: <textarea th:field="*{name}"></textarea></p>
