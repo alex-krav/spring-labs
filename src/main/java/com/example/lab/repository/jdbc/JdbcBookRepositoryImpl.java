@@ -1,6 +1,5 @@
 package com.example.lab.repository.jdbc;
 
-import com.example.lab.exception.NotFoundException;
 import com.example.lab.model.Author;
 import com.example.lab.model.BaseEntity;
 import com.example.lab.model.Book;
@@ -109,7 +108,7 @@ public class JdbcBookRepositoryImpl implements BookRepository {
 
     @Override
     public Book findById(int id) {
-        Book book;
+        Book book = null;
 
         try {
             book = this.namedParameterJdbcTemplate.queryForObject(
@@ -117,11 +116,11 @@ public class JdbcBookRepositoryImpl implements BookRepository {
                     Map.of("id", id),
                     BeanPropertyRowMapper.newInstance(Book.class)
             );
-        } catch (EmptyResultDataAccessException ex) {
-            throw new NotFoundException();
+        } catch (EmptyResultDataAccessException ignore) {
+            // will be handled in controller
         }
 
-        if (book != null) {
+        if (book != null && book.getId() != null) {
             loadAuthors(book);
             loadKeywords(book);
         }

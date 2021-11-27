@@ -1,5 +1,6 @@
 package com.example.lab.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Keyword extends BaseEntity {
     @Size(max = 60)
     private String name;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "book_keywords", joinColumns =
     @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "keyword_id"))

@@ -1,17 +1,11 @@
 package com.example.lab.service;
 
-import com.example.lab.model.Author;
 import com.example.lab.model.Book;
-import com.example.lab.model.Form;
-import com.example.lab.model.Keyword;
 import com.example.lab.repository.BookRepository;
-import org.apache.commons.lang3.StringUtils;
+import com.example.lab.rest.NewBook;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -48,28 +42,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void save(Book book) {
-        bookRepository.save(book);
+    public Book save(Book book) {
+        return bookRepository.save(book);
     }
 
     @Override
-    public Book save(Form form) {
+    public Book save(NewBook newBook) {
         Book book = new Book();
-        book.setName(form.getName());
-
-        List<Author> authors = Arrays.stream(form.getAuthors().split(","))
-                .filter(StringUtils::isNotBlank)
-                .map(String::trim)
-                .map(Author::new)
-                .collect(Collectors.toList());
-        book.setAuthors(authors);
-
-        List<Keyword> keywords = Arrays.stream(form.getKeywords().split(","))
-                .filter(StringUtils::isNotBlank)
-                .map(String::trim)
-                .map(Keyword::new)
-                .collect(Collectors.toList());
-        book.setKeywords(keywords);
+        book.setName(newBook.getName());
+        book.setAuthors(newBook.getAuthorsList());
+        book.setKeywords(newBook.getKeywordsList());
 
         return bookRepository.save(book);
     }

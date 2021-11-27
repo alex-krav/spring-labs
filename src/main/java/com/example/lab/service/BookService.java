@@ -1,7 +1,7 @@
 package com.example.lab.service;
 
 import com.example.lab.model.Book;
-import com.example.lab.model.Form;
+import com.example.lab.rest.NewBook;
 
 import java.util.Collection;
 
@@ -11,7 +11,7 @@ public interface BookService {
     Collection<Book> findBooksByAuthor(String author);
     Collection<Book> findBooksByKeyword(String keyword);
     Book findBookById(int id);
-    void save(Book book);
-    Book save(Form form);
+    Book save(Book book);
+    Book save(NewBook newBook);
     void delete(int id);
 }

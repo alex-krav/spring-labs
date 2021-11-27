@@ -31,3 +31,10 @@ mvn clean install
 ```
 mvn spring-boot:run
 ```
+
+### Use
+#### Web UI
+Open http://localhost:8080
+
+#### REST API
+Use [Postman](https://www.postman.com/) to test API described on [SwaggerHub](https://app.swaggerhub.com/apis/akrawchuk89/LibCat/v1)

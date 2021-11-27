@@ -3,7 +3,7 @@ package com.example.lab.controller;
 import com.example.lab.exception.BadRequestException;
 import com.example.lab.exception.NotFoundException;
 import com.example.lab.model.Book;
-import com.example.lab.model.Form;
+import com.example.lab.rest.NewBook;
 import com.example.lab.service.BookService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +37,13 @@ public class BookController {
             throw new NotFoundException();
         }
 
+        Book book = bookService.findBookById(id);
+        if (book == null || book.getId() == null) {
+            throw new NotFoundException();
+        }
+
         ModelAndView mav = new ModelAndView("books/details.html");
-        mav.addObject("book", bookService.findBookById(id));
+        mav.addObject("book", book);
         return mav;
     }
 
@@ -72,16 +77,16 @@ public class BookController {
     @GetMapping("/books/add")
     public ModelAndView initCreationForm() {
         ModelAndView mav = new ModelAndView("books/addForm.html");
-        mav.addObject("form", new Form());
+        mav.addObject("newBook", new NewBook());
         return mav;
     }
 
     @PostMapping("/books/add")
-    public RedirectView processCreationForm(@ModelAttribute Form form) {
-        if (form.isEmpty()) {
+    public RedirectView processCreationForm(@ModelAttribute NewBook newBook) {
+        if (newBook.isEmpty()) {
             throw new BadRequestException();
         }
-        Book book = bookService.save(form);
+        Book book = bookService.save(newBook);
         return new RedirectView("/books/" + book.getId());
     }
 

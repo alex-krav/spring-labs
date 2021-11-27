@@ -1,5 +1,6 @@
 package com.example.lab.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Author extends BaseEntity {
     @Size(max = 255)
     private String fullname;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "author_books", joinColumns =
     @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))

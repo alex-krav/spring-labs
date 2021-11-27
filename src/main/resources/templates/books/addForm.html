@@ -8,7 +8,7 @@
     <body>
         <menu th:insert="/fragments/menu.html :: menu"> </menu>
         <h1>New book</h1>
-        <form action="#" th:action="@{/books/add}" th:object="${form}" method="post">
+        <form action="#" th:action="@{/books/add}" th:object="${newBook}" method="post">
             <p>Name: <textarea th:field="*{name}"></textarea></p>
             <p>Authors (comma-separated): <textarea th:field="*{authors}"></textarea></p>
             <p>Keywords (comma-separated): <textarea th:field="*{keywords}"></textarea></p>
