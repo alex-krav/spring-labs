@@ -1,5 +1,7 @@
 package com.example.lab.controller;
 
+import com.example.lab.exception.BadRequestException;
+import com.example.lab.exception.NotFoundException;
 import com.example.lab.model.Book;
 import com.example.lab.model.Form;
 import com.example.lab.service.BookService;
@@ -19,7 +21,7 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/books")
+    @GetMapping(value = {"/", "/books"})
     public ModelAndView listBooks() {
         ModelAndView mav = new ModelAndView("books/list.html");
         mav.addObject("books", bookService.findBooks());
@@ -27,9 +29,16 @@ public class BookController {
     }
 
     @GetMapping("/books/{bookId}")
-    public ModelAndView showBook(@PathVariable("bookId") int bookId) {
+    public ModelAndView showBook(@PathVariable("bookId") String bookId) {
+        int id;
+        try {
+            id = Integer.parseInt(bookId);
+        } catch (NumberFormatException ex) {
+            throw new NotFoundException();
+        }
+
         ModelAndView mav = new ModelAndView("books/details.html");
-        mav.addObject("book", bookService.findBookById(bookId));
+        mav.addObject("book", bookService.findBookById(id));
         return mav;
     }
 
@@ -69,6 +78,9 @@ public class BookController {
 
     @PostMapping("/books/add")
     public RedirectView processCreationForm(@ModelAttribute Form form) {
+        if (form.isEmpty()) {
+            throw new BadRequestException();
+        }
         Book book = bookService.save(form);
         return new RedirectView("/books/" + book.getId());
     }
@@ -83,6 +95,9 @@ public class BookController {
 
     @PostMapping(value = "/books/{bookId}/edit")
     public RedirectView processEditForm(@PathVariable("bookId") int bookId, Book book) {
+        if (book.isNew()) {
+            throw new BadRequestException();
+        }
         bookService.save(book);
         return new RedirectView("/books/" + book.getId());
     }

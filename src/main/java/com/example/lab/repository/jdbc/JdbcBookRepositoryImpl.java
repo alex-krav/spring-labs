@@ -1,5 +1,6 @@
 package com.example.lab.repository.jdbc;
 
+import com.example.lab.exception.NotFoundException;
 import com.example.lab.model.Author;
 import com.example.lab.model.BaseEntity;
 import com.example.lab.model.Book;
@@ -13,7 +14,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -118,7 +118,7 @@ public class JdbcBookRepositoryImpl implements BookRepository {
                     BeanPropertyRowMapper.newInstance(Book.class)
             );
         } catch (EmptyResultDataAccessException ex) {
-            throw new ObjectRetrievalFailureException(Book.class, id);
+            throw new NotFoundException();
         }
 
         if (book != null) {
