@@ -1,12 +1,15 @@
 spring:
   profiles:
-    active: mysql
+    active: mariadb
   jpa:
     defer-datasource-initialization: true
     generate-ddl: false
     hibernate:
       ddl-auto: none
     open-in-view: false
+#  security:
+#    user: "admin"
+#    password: "admin"
 server:
   error:
     whitelabel:
