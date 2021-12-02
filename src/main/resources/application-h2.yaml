@@ -1,7 +1,7 @@
 spring:
   datasource:
     #    url: jdbc:h2:file:./database/libcat
-    url: jdbc:h2:file:./database/libcat;INIT=RUNSCRIPT FROM './database/schema.sql'\;RUNSCRIPT FROM './database/data.sql'
+    url: jdbc:h2:file:./database/libcat;INIT=RUNSCRIPT FROM './database/h2/schema.sql'\;RUNSCRIPT FROM './database/h2/data.sql'
     username: admin
     password: admin
     driverClassName: org.h2.Driver

@@ -1,12 +1,24 @@
 # Library Catalogue
 
 ## MariaDB database
-
-- open installation directory, e.g. "C:\Program Files\MariaDB 10.6\bin"
-- populate database with initial data
+### Installation Instruction
+#### Install binaries
+- Ubuntu: Read instruction here https://www.digitalocean.com/community/tutorials/how-to-install-mariadb-on-ubuntu-20-04-ru
+- OS X: Read instruction here https://mariadb.com/kb/en/installing-mariadb-on-macos-using-homebrew/
+#### Setup user
+- Add user `admin` with password `admin`
 ```
-mysql -u root -proot --default-character-set=utf8 < "PROJECT_DIRECTORY\database\mariadb\schema.sql
-mysql -u root -proot --default-character-set=utf8 < "PROJECT_DIRECTORY\database\data.sql
+GRANT ALL ON *.* TO 'admin'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+```
+- Flush the privileges
+```
+FLUSH PRIVILEGES;
+```
+#### Import initial data
+- Populate database with initial data
+```
+mysql -u admin -padmin --default-character-set=utf8 < "PROJECT_DIRECTORY\database\mariadb\schema.sql
+mysql -u admin -padmin --default-character-set=utf8 < "PROJECT_DIRECTORY\database\data.sql
 ```
 
 ## H2 database
