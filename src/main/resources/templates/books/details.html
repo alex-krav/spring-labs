@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <title>Book details</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,14 +8,14 @@
     <body>
         <menu th:insert="/fragments/menu.html :: menu"> </menu>
         <h1>Book</h1>
-        <a th:href="'/books/' + ${book.id} + '/edit'">Edit</a>
+        <a sec:authorize="isAuthenticated()" th:href="'/books/' + ${book.id} + '/edit'">Edit</a>
         <table>
             <tr><td th:text="${book.name}" /></tr>
             <tr><td th:text="${#strings.listJoin(book.authors, ', ')}" /></tr>
             <tr><td th:text="${#strings.listJoin(book.keywords, ', ')}" /></tr>
         </table>
         <form method="post" th:action="'/books/' + ${book.id} + '/delete'">
-            <input type="submit" value="Delete" />
+            <input sec:authorize="isAuthenticated()" type="submit" value="Delete" />
         </form>
     </body>
 </html>

@@ -6,12 +6,12 @@
     </head>
     <body>
         <ul th:fragment="menu">
+            <li sec:authorize="isAuthenticated()">Hello, admin</span></li>
             <li><a href="/books">Books list</a></li>
             <li><a href="/search">Search</a></li>
             <li><a href="/books/add">Add new book</a></li>
             <li sec:authorize="isAnonymous()"><a class="nav-link" href="/login">Login as admin</a></li>
             <li sec:authorize="isAuthenticated()"><a class="nav-link" href="/logout">Logout</a></li>
-            <li sec:authorize="isAuthenticated()">Hello, admin</span></li>
         </ul>
     </body>
 </html>

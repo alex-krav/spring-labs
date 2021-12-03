@@ -29,6 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/books/**/edit").hasRole("ADMIN")
                 .antMatchers("/books/**/delete").hasRole("ADMIN")
                 .antMatchers("/books/add").hasRole("ADMIN")
+                .antMatchers("/api/v1/**").hasRole("ADMIN")
                 .and()
                 .formLogin();
 
