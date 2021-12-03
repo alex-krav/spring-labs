@@ -18,8 +18,8 @@ public class MySQLJdbcConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/libcat?useUnicode=yes&characterEncoding=UTF-8");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setUsername("admin");
+        dataSource.setPassword("admin");
 
         return dataSource;
     }
