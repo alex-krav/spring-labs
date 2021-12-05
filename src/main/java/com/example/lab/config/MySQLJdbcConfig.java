@@ -10,7 +10,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
-@Profile("mysql")
+@Profile("mariadb")
 public class MySQLJdbcConfig {
 
     @Bean
