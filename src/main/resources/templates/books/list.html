@@ -15,7 +15,7 @@
             <tr th:each="book: ${books}">
                 <td><a th:href="'/books/' + ${book.id}" th:text="${book.name}" /></td>
                 <td th:text="${#strings.listJoin(book.authors, ', ')}" />
-                <td th:text="${#strings.listJoin(book.keywords, ', ')}" />
+                <td th:text="*{book.keywords.size > 0}? *{#strings.listJoin(book.keywords, ', ')} : 'Keywords doesn\'t specified'"/>
             </tr>
         </table>
     </body>

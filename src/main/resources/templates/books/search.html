@@ -15,7 +15,7 @@
             <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
         </form>
         <table>
-            <tr th:if="${books.empty && !query.empty}">
+            <tr th:unless="${!books.empty || query.empty}">
                 <td colspan="3"> No results by your query: <span th:text="${query}" /></td>
             </tr>
             <tr th:if="${!books.empty}">
