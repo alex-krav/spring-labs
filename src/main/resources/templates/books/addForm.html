@@ -4,15 +4,18 @@
         <title>New book</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" href="/styles/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     </head>
     <body>
         <menu th:insert="/fragments/menu.html :: menu"> </menu>
-        <h1>New book</h1>
+        <h1>Новая книга</h1>
         <form action="#" th:action="@{/books/add}" th:object="${newBook}" method="post">
-            <p>Name: <textarea th:field="*{name}"></textarea></p>
-            <p>Authors (comma-separated): <textarea th:field="*{authors}"></textarea></p>
-            <p>Keywords (comma-separated): <textarea th:field="*{keywords}"></textarea></p>
-            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+            <div>Name: <textarea th:field="*{name}"></textarea></div>
+            <div>Authors (comma-separated): <textarea th:field="*{authors}"></textarea></div>
+            <div>Keywords (comma-separated): <textarea th:field="*{keywords}"></textarea></div>
+            <div><input type="submit" value="Подтвердить" /> <input type="reset" value="Сбросить" /></div>
         </form>
     </body>
 </html>
