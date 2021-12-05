@@ -57,13 +57,13 @@ public class BookController {
 
         if (StringUtils.isNotBlank(name)) {
             books = bookService.findBooksByName(name);
-            query = "name = " + name;
+            query = name;
         } else if (StringUtils.isNotBlank(author)) {
             books = bookService.findBooksByAuthor(author);
-            query = "author = " + author;
+            query = author;
         } else if (StringUtils.isNotBlank(keyword)) {
             books = bookService.findBooksByKeyword(keyword);
-            query = "keyword = " + keyword;
+            query = keyword;
         } else {
             books = Collections.emptyList();
             query = StringUtils.EMPTY;
