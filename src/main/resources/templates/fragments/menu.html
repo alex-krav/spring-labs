@@ -3,15 +3,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" href="/styles/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     </head>
     <body>
         <ul th:fragment="menu">
-            <li sec:authorize="isAuthenticated()">Hello, admin</span></li>
-            <li><a href="/books">Books list</a></li>
-            <li><a href="/search">Search</a></li>
-            <li><a href="/books/add">Add new book</a></li>
-            <li sec:authorize="isAnonymous()"><a class="nav-link" href="/login">Login as admin</a></li>
-            <li sec:authorize="isAuthenticated()"><a class="nav-link" href="/logout">Logout</a></li>
+            <li><a href="/books">Список книг</a></li>
+            <li><a href="/search">Поиск</a></li>
+            <li><a href="/books/add">Добавить книгу</a></li>
+            <li sec:authorize="isAnonymous()"><a class="nav-link" href="/login">Войти как админ</a></li>
+            <li sec:authorize="isAuthenticated()"><a class="nav-link" href="/logout">Выйти</a></li>
         </ul>
     </body>
 </html>

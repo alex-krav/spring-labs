@@ -1,31 +1,52 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Search</title>
+        <title>Поиск</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" href="/styles/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     </head>
     <body>
         <menu th:insert="/fragments/menu.html :: menu"> </menu>
-        <h1>Search</h1>
+        <h1>Поиск</h1>
         <form action="/search" method="get">
-            <p>Name: <input type="text" name="name" /></p>
-            <p>Author: <input type="text" name="author" /></p>
-            <p>Keyword: <input type="text" name="keyword" /></p>
-            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+            <div class="formElement">
+                <span class="formElementName">Название книги:</span>
+                <input class="inputText" type="text" name="name" />
+            </div>
+            <div class="formElement">
+                <span class="formElementName">Автор:</span>
+                <input class="inputText" type="text" name="author" />
+            </div>
+            <div class="formElement">
+                <span class="formElementName">Ключевые слова:</span>
+                <input class="inputText" type="text" name="keyword" />
+            </div>
+            <div class="formElement">
+                <input class="button submit" type="submit" value="Подтвердить" />
+                <input class="button reset" type="reset" value="Сбросить" />
+            </div>
         </form>
-        <table>
-            <tr th:unless="${!books.empty || query.empty}">
-                <td colspan="3"> No results by your query: <span th:text="${query}" /></td>
-            </tr>
-            <tr th:if="${!books.empty}">
-                <td colspan="3"> Results by your query: <span th:text="${query}" /></td>
-            </tr>
-            <tr th:each="book: ${books}">
-                <td th:text="${book.name}" />
-                <td th:text="${#strings.listJoin(book.authors, ', ')}" />
-                <td th:text="*{book.keywords.size > 0}? *{#strings.listJoin(book.keywords, ', ')} : 'Keywords doesn\'t specified'"/>
-            </tr>
-        </table>
+        <div th:unless="${!books.empty || query.empty}">
+            <div class="searchMessage">Ничего не найдено по запросу: <span th:text="${query}" /></div>
+        </div>
+        <div th:if="${!books.empty}">
+            <div class="searchMessage">Результаты по запросу: <span th:text="${query}" /></div>
+        </div>
+        <div class="booksList">
+            <div class="book" th:each="book: ${books}">
+                <div class="bookCol" th:text="${book.name}" />
+                <div class="bookCol">
+                    <span class="dash">/</span>
+                    <span th:text="${#strings.listJoin(book.authors, ', ')}" />
+                </div>
+                <div class="bookCol">
+                    <span class="dash">/</span>
+                    <span th:text="*{book.keywords.size > 0}? *{#strings.listJoin(book.keywords, ', ')} : 'Ключевые слова не указаны'"/>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

@@ -1,7 +1,111 @@
-table {
-    border-collapse: collapse;
+body {
+    display: grid;
+    place-content: center;
+    background-color: #D9DBBC;
+    min-width: 1100px;
+    color: #231506;
+    font-family: 'Merriweather', serif;
 }
-
-td {
-    border: 0.5px solid black;
+a {
+    padding: 10px;
+    color: #231506;
+    text-decoration: none;
+}
+menu a:hover {
+    border-bottom: 1px solid #704214;
+    color: #704214;
+}
+h1{
+    justify-self: center;
+}
+form {
+    display: grid;
+    place-content: center;
+    align-self: center;
+}
+menu {
+    padding-left: 0px;
+}
+ul {
+    min-width: 1100px;
+    list-style-type: none;
+    display: grid;
+    grid-auto-flow: column;
+    padding-left: 0px;
+}
+li {
+    justify-self: center;
+}
+.booksList {
+    display: grid;
+    overflow: hidden;
+    border-radius: 20px;
+}
+.book {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 25% 25% 50%;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #D9DBBC;
+}
+.bookCol {
+    display: flex;
+    margin-left: 16px;
+}
+.bookColLink {
+    text-decoration: underline;
+}
+.bookColLink:hover {
+    color: #704214;
+}
+.dash {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+.searchMessage {
+    margin: 32px 0px 32px 0px;
+}
+.formElement {
+    display: grid;
+    grid-auto-flow: column;
+    margin-bottom: 16px;
+    height: 30px;
+    min-width: 500px;
+    grid-template-columns: 35%;
+}
+.formElementName {
+    margin: 0px 16px 0px 0px;
+    align-self: center;
+}
+.button {
+    padding: 8px 16px 8px 16px;
+    border: 1px solid;
+    border-radius: 10px;
+    width: 120px;
+    background-color: #D9DBBC;
+    color: #f9f9f9;
+}
+.submit {
+    border-color: #7BB77E;
+    background-color: #7BB77E;
+}
+.submit:hover {
+    background-color: #A3CCA5;
+    border-color: #A3CCA5;
+}
+.reset {
+    border-color: #DB5764;
+    background-color: #DB5764;
+    justify-self: end;
+}
+.reset:hover {
+    background-color: #E68992;
+    border-color: #E68992;
+}
+.inputText {
+    border: none;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    height: 24px;
+    align-self: center;
 }
