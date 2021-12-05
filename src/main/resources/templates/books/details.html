@@ -4,10 +4,13 @@
         <title>Book details</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" href="/styles/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     </head>
     <body>
         <menu th:insert="/fragments/menu.html :: menu"> </menu>
-        <h1>Book</h1>
+        <h1>Книга</h1>
         <a sec:authorize="isAuthenticated()" th:href="'/books/' + ${book.id} + '/edit'">Edit</a>
         <table>
             <tr><td th:text="${book.name}" /></tr>
@@ -15,7 +18,7 @@
             <tr><td th:text="${#strings.listJoin(book.keywords, ', ')}" /></tr>
         </table>
         <form method="post" th:action="'/books/' + ${book.id} + '/delete'">
-            <input sec:authorize="isAuthenticated()" type="submit" value="Delete" />
+            <input sec:authorize="isAuthenticated()" type="submit" value="Удалить" />
         </form>
     </body>
 </html>
