@@ -1,31 +1,88 @@
 USE libcat;
 
-INSERT INTO author VALUES (1, 'Джордж Оруэлл');
-INSERT INTO author VALUES (2, 'Людмила Сарычева');
-INSERT INTO author VALUES (3, 'Максим Ильяхов');
+INSERT INTO author (id, fullname) VALUES
+(1, 'Джордж Оруэлл'),
+(2, 'Людмила Сарычева'),
+(3, 'Максим Ильяхов'),
+(4, 'Артемий Лебедев'),
+(5, 'Джоан Роулинг'),
+(6, 'Олдос Хаксли'),
+(7, 'Айзек Азимов'),
+(8, 'Френк Герберт'),
+(9, 'Сергей Есенин'),
+(10, 'Владимир Набоков'),
+(11, 'Марина Абрамович'),
+(12, 'Николай Кун'),
+(13, 'Энн Бронте');
 
-INSERT INTO book VALUES (1, '1984');
-INSERT INTO book VALUES (2, 'Пиши, скорочуй. Як створити дієвий текст');
+INSERT INTO book (id, name) VALUES
+(1, '1984'),
+(2, 'Пиши, скорочуй. Як створити дієвий текст'),
+(3, 'Ководство'),
+(4, 'Гарри Поттер и философский камень'),
+(5, 'О новый дивный мир'),
+(6, 'Конец вечности'),
+(7, 'Дюна'),
+(8, 'Сборник стихотворений'),
+(9, 'Другие берега'),
+(10, 'Пройти сквозь стены'),
+(11, 'Легенды и мифы Древней Греции'),
+(12, 'Незнакомка из Уайлдфелл-Холла');
 
-INSERT INTO author_books VALUES (1, 1);
-INSERT INTO author_books VALUES (2, 2);
-INSERT INTO author_books VALUES (3, 2);
+INSERT INTO author_books (author_id, book_id) VALUES
+(1, 1),
+(2, 2),
+(3, 2),
+(4, 3),
+(5, 4),
+(6, 5),
+(7, 6),
+(8, 7),
+(9, 8),
+(10, 9),
+(11, 10),
+(12, 11),
+(13, 12);
 
-INSERT INTO keyword VALUES (1, 'фентези');
-INSERT INTO keyword VALUES (2, 'фантастика');
-INSERT INTO keyword VALUES (3, 'aнтиутопия');
-INSERT INTO keyword VALUES (4, 'Саморазвитие');
-INSERT INTO keyword VALUES (5, 'Мотивация');
-INSERT INTO keyword VALUES (6, 'Креативность');
-INSERT INTO keyword VALUES (7, 'творчество');
+INSERT INTO keyword (id, name) VALUES
+(1, 'фентези'),
+(2, 'фантастика'),
+(3, 'aнтиутопия'),
+(4, 'Саморазвитие'),
+(5, 'Мотивация'),
+(6, 'Креативность'),
+(7, 'творчество'),
+(8, 'лирика'),
+(9, 'автобиография'),
+(10, 'история'),
+(11, 'роман');
 
-INSERT INTO book_keywords VALUES (1, 1);
-INSERT INTO book_keywords VALUES (1, 2);
-INSERT INTO book_keywords VALUES (1, 3);
-INSERT INTO book_keywords VALUES (2, 4);
-INSERT INTO book_keywords VALUES (2, 5);
-INSERT INTO book_keywords VALUES (2, 6);
-INSERT INTO book_keywords VALUES (2, 7);
+
+INSERT INTO book_keywords (book_id, keyword_id) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 4),
+(2, 5),
+(2, 6),
+(2, 7),
+(3, 4),
+(3, 6),
+(3, 7),
+(4, 1),
+(4, 2),
+(5, 2),
+(5, 3),
+(6, 2),
+(6, 3),
+(7, 2),
+(7, 3),
+(8, 8),
+(9, 9),
+(10, 9),
+(11, 10),
+(12, 8),
+(12, 11);
 
 --------------------------------------------
 
