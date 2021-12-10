@@ -10,10 +10,22 @@
         <h1>Редактировать</h1>
         <form action="#" th:action="${actionPath}" th:object="${book}" method="post">
             <input type="hidden" th:field="*{id}" />
-            <p>Name: <textarea th:field="*{name}"></textarea></p>
-            <p>Authors (comma-separated): <textarea th:field="*{authors}"></textarea></p>
-            <p>Keywords (comma-separated): <textarea th:field="*{keywords}"></textarea></p>
-            <p><input type="submit" value="Подтвердить" /> <input type="reset" value="Сбросить" /></p>
+            <div class="formElement">
+                <span>Название:</span>
+                <textarea class="inputText" th:field="*{name}"></textarea>
+            </div>
+            <div class="formElement">
+                <span>Авторы (через запятую):</span>
+                <textarea class="inputText" th:field="*{authors}"></textarea>
+            </div>
+            <div class="formElement">
+                <span>Ключевые слова (через запятую):</span>
+                <textarea class="inputText" th:field="*{keywords}"></textarea>
+            </div>
+            <div class="formElement">
+                <input class="button submit" type="submit" value="Подтвердить" />
+                <input class="button reset" type="reset" value="Сбросить" />
+            </div>
         </form>
     </body>
 </html>
