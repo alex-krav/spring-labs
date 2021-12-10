@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: mariadb
+    active: mariadb, jdbc
   jpa:
     defer-datasource-initialization: true
     generate-ddl: false

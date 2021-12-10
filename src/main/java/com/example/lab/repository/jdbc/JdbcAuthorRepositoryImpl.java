@@ -1,9 +1,9 @@
 package com.example.lab.repository.jdbc;
 
 import com.example.lab.model.Author;
-import com.example.lab.model.Book;
 import com.example.lab.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 
+@Profile("jdbc")
 @Repository
 public class JdbcAuthorRepositoryImpl implements AuthorRepository {
 
@@ -29,9 +30,9 @@ public class JdbcAuthorRepositoryImpl implements AuthorRepository {
     }
 
     @Override
-    public void deleteForBook(Book book) {
+    public void deleteForBook(int id) {
         this.namedParameterJdbcTemplate.update(
                 "DELETE from author_books WHERE book_id = :id",
-                Map.of("id", book.getId()));
+                Map.of("id", id));
     }
 }

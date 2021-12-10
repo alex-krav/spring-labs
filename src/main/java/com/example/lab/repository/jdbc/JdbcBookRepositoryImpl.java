@@ -224,7 +224,7 @@ public class JdbcBookRepositoryImpl implements BookRepository {
     }
 
     private void saveAuthors(final Book book) {
-        authorRepository.deleteForBook(book);
+        authorRepository.deleteForBook(book.getId());
 
         List<Map<String, Object>> params = new ArrayList<>();
         for (Author author : book.getAuthors()) {
